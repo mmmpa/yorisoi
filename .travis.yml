@@ -5,13 +5,14 @@ rvm:
   - 2.2.2
 env:
   - DB=sqlite
-
-bundler_args: --without development --deployment
- 
+  
 before_script:
   - cp spec/dummy/config/database.travis.yml spec/dummy/config/database.yml
   - bundle exec rake db:create
   - bundle exec rake db:migrate
+
+bundler_args: --without development --deployment
  
+
 script:
   - bundle exec rspec spec
