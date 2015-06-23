@@ -159,8 +159,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.10)
   coveralls
   factory_girl_rails
+  rake (~> 10.0)
   rspec-html-matchers
   rspec-rails
   sqlite3
