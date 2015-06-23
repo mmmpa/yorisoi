@@ -10,7 +10,3 @@ before_script:
   - cp spec/dummy/config/database.travis.yml spec/dummy/config/database.yml
 
 bundler_args: --without development --deployment
- 
-
-script:
-  - bundle exec rspec spec
