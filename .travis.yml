@@ -8,10 +8,8 @@ env:
 
 bundler_args: --without development --deployment
  
-cache: bundler
- 
 before_script:
-  - cp spec/dummy/config/database.travis.yml spec/dummy/config/database.yml
+  - cp spec/dummy/config/database.travis.yml spec/dummy/Zconfig/database.yml
   - bundle exec rake db:create
   - bundle exec rake db:migrate
  
