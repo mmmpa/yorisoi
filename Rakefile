@@ -14,7 +14,10 @@ RDoc::Task.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-
+require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
+task :default => :spec
+RSpec::Core::RakeTask.new
 
 
 
