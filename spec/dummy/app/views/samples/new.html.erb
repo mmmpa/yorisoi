@@ -1,0 +1,155 @@
+<style type="text/css">
+    <!--
+    h1 {
+        margin: 10px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    ul.errors {
+        margin: 10px 0 0 25px;
+    }
+
+    ul.errors li {
+        list-style: square;
+        color: #c00;
+    }
+
+    .collection label,
+    ul.radio-buttons > li,
+    ul.check-boxes > li {
+        display: inline-block;
+        padding-right: 10px;
+    }
+
+    .input-head,
+    .input-body {
+        border-top: 1px solid #ccc;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .input-head {
+        vertical-align: top;
+        padding-top: 20px;
+    }
+
+    .field_with_errors input,
+    .field_with_errors textarea,
+    .field_with_errors select {
+        border-color: #c00;
+    }
+
+    .field_with_errors {
+        padding-bottom: 1px;
+        border-bottom: 2px solid #c00;
+    }
+
+    .floater {
+        padding: 30px;
+        float: left;
+    }
+
+    .collection label div {
+        display: inline-block;
+    }
+
+    -->
+</style>
+<article class="w400 floater">
+    <h1>Yorisoi</h1>
+    <%= form_for @sample, url: create_path, method: :post, builder: Yorisoi::Builder do |f| %>
+        <div class="input-box p100">
+            <section class="input-set">
+                <label class="input-head">text</label>
+                <div class="input-body p100">
+                    <%= f.text_field :text, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">password</label>
+                <div class="input-body p100">
+                    <%= f.password_field :password, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">textarea</label>
+                <div class="input-body p100">
+                    <%= f.text_area :textarea, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">select</label>
+                <div class="input-body p100">
+                    <%= f.select :select, Const::SELECT, {prompt: :select}, {class: [:p100]} %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">radio buttons</label>
+                <div class="input-body p100">
+                    <%= f.radio_buttons :radio, {class: [:bigger]}, Const::RADIO.zip(Const::RADIO) %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">check boxes</label>
+                <div class="input-body p100">
+                    <%= f.check_boxes :checkbox, {class: [:bigger]}, Const::CHECKBOX.zip(Const::CHECKBOX) %>
+                </div>
+            </section>
+        </div>
+        <ul class="form-button-area">
+            <li><%= f.submit :submit, class: [:button, :green] %></li>
+        </ul>
+    <% end %>
+</article>
+<article class="w400 floater">
+    <h1>Default</h1>
+    <%= form_for @sample, url: create_path, method: :post do |f| %>
+        <div class="input-box p100">
+            <section class="input-set">
+                <label class="input-head">text</label>
+                <div class="input-body p100">
+                    <%= f.text_field :text, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">password</label>
+                <div class="input-body p100">
+                    <%= f.password_field :password, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">textarea</label>
+                <div class="input-body p100">
+                    <%= f.text_area :textarea, class: [:p100] %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">select</label>
+                <div class="input-body p100">
+                    <%= f.select :select, Const::SELECT, {prompt: :select}, {class: [:p100]} %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">collection<br>radio buttons</label>
+                <div class="input-body p100 collection">
+                    <%#= f.radio_buttons :radio, {class: [:bigger]}, Const::RADIO.zip(Const::RADIO) %>
+                    <%= f.collection_radio_buttons :radio, Const::RADIO.zip(Const::RADIO), :last, :first, {}, class: [:bigger] do |b| %>
+                        <% b.label { b.radio_button + b.text } %>
+                    <% end %>
+                </div>
+            </section>
+            <section class="input-set">
+                <label class="input-head">collection<br>check boxes</label>
+                <div class="input-body p100 collection">
+                    <%= f.collection_check_boxes :checkbox, Const::CHECKBOX.zip(Const::CHECKBOX), :last, :first, {}, class: [:bigger] do |b| %>
+                        <% b.label { b.check_box + b.text } %>
+                    <% end %>
+                </div>
+            </section>
+        </div>
+        <ul class="form-button-area">
+            <li><%= f.submit :submit, class: [:button, :green] %></li>
+        </ul>
+    <% end %>
+</article>

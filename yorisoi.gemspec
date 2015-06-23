@@ -1,0 +1,26 @@
+$:.push File.expand_path("../lib", __FILE__)
+
+# Maintain your gem's version:
+require "yorisoi/version"
+
+# Describe your gem and declare its dependencies:
+Gem::Specification.new do |spec|
+  spec.name        = "yorisoi"
+  spec.version     = Yorisoi::VERSION
+  spec.authors       = ['mmmpa']
+  spec.email         = ['mmmpa.mmmpa@gmail.com']
+
+  spec.summary       = 'Writing error message next each inputs.'
+  spec.description   = 'Writing error message next each inputs.'
+  spec.homepage      = 'http://mmmpa.net/'
+  spec.license       = 'MIT'
+
+  spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+
+  spec.add_dependency "rails", "~> 4.2.1"
+
+  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "rspec-rails"
+  spec.add_development_dependency 'rspec-html-matchers'
+  spec.add_development_dependency "factory_girl_rails"
+end
