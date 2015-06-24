@@ -16,12 +16,12 @@ RSpec.describe Yorisoi::Builder do
     end
 
     it 'change error child' do
-      @f = Yorisoi::Builder.new(:sample, @sample, TestHelper.new, {
+      changed = Yorisoi::Builder.new(:sample, @sample, TestHelper.new, {
               builder_tag: {
                   errors_wrapper: ->(error_children, attribute) { %{<div class="error-messages #{attribute}">#{error_children}</div>}.html_safe },
                   error_wrapper: ->(error, attribute) { %{<p class="error-message #{attribute}">#{error}</p>}.html_safe }
               }})
-      expect(@f.text_field(:text)).to have_tag('div.error-messages.text p.error-message.text')
+      expect(changed.text_field(:text)).to have_tag('div.error-messages.text p.error-message.text')
     end
   end
 
@@ -36,6 +36,27 @@ RSpec.describe Yorisoi::Builder do
         @sample.valid?
         expect(@f.text_field(:text)).to have_tag('ul.errors.text')
       end
+    end
+  end
+
+  context 'remnant errors' do
+    before :each do
+      @sample.valid?
+      @count = @sample.errors.count
+      @fr = Yorisoi::Builder.new(:sample, @sample, TestHelper.new, {})
+    end
+
+    it do
+      @fr.write_error(:text)
+
+      p @fr.remnant
+      expect(@fr.remnant).to have_tag('li.error', count: 11)
+    end
+
+    it do
+      @fr.text_field(:text)
+
+      expect(@fr.remnant).to have_tag('li.error', count: 11)
     end
   end
 

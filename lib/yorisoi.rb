@@ -39,12 +39,18 @@ module Yorisoi
     using Arralizer
     using Flipper
 
-    attr_accessor :wrapper, :invalid_wrapper, :errors_wrapper, :error_wrapper
+    attr_accessor :wrapper, :invalid_wrapper, :errors_wrapper, :error_wrapper, :stored_error
 
 
     def initialize(object_name, object, template, options)
       self.default_tag = options[:builder_tag] || {}
+      store_error(object)
       super
+    end
+
+
+    def store_error(object)
+      @stored_error = object.errors.presence || {}
     end
 
 
@@ -95,13 +101,6 @@ module Yorisoi
     end
 
 
-    def pick_error(attribute)
-      return nil if @object.nil? || !(messages = @object.errors.messages[attribute]).present?
-
-      errors_wrapper.(messages.map(&error_wrapper.(attribute)).join.html_safe, attribute)
-    end
-
-
     def radio_button(attribute, label_and_value, options = {})
       wrap_field(attribute, options) do
         if label_and_value.is_a?(Array)
@@ -124,6 +123,16 @@ module Yorisoi
     end
 
 
+    def remnant
+      return if @stored_error.blank?
+      errors_wrapper.(@stored_error.map { |attribute, *errors|
+        errors.map { |message|
+          error_wrapper.(attribute, message)
+        }
+      }.flatten.join.html_safe, :remnant)
+    end
+
+
     def select(attribute, choices = nil, options = {}, html_options = {}, &block)
       wrap_field(attribute, options) { super }
     end
@@ -134,10 +143,26 @@ module Yorisoi
       no_wrap = options.delete(:no_wrap)
 
       if (error_html = pick_error(attribute)).present?
-        no_errors ? yield : yield + error_html
+        if no_errors
+          yield
+        else
+          delete_stored_error!(attribute)
+          yield + error_html
+        end
       else
         no_wrap ? yield : wrapper.(yield, attribute)
       end.html_safe
+    end
+
+
+    def write_error(attribute)
+      delete_stored_error!(attribute)
+      pick_error(attribute)
+    end
+
+
+    def delete_stored_error!(attribute)
+      @stored_error.delete(attribute)
     end
 
 
@@ -176,6 +201,13 @@ module Yorisoi
 
     def default_wrapper
       ->(content, attribute) { content_tag(:div, content, class: %w(normal-field).push(attribute)) }
+    end
+
+
+    def pick_error(attribute)
+      return nil if @object.nil? || !(messages = @object.errors.messages[attribute]).present?
+
+      errors_wrapper.(messages.map(&error_wrapper.(attribute)).join.html_safe, attribute)
     end
 
 

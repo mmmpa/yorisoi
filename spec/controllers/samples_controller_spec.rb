@@ -10,7 +10,20 @@ RSpec.describe SamplesController, :type => :controller do
     end
   end
 
-  describe "POST create" do
+  describe "display remnant" do
+    it 'valid params NOT render error message' do
+      post :create, remnant: true, sample: attributes_for(:sample)
+      expect(response.body).not_to have_tag('ul.errors.text')
+      expect(response.body).not_to have_tag('ul.errors.password')
+      expect(response.body).not_to have_tag('ul.errors.textarea')
+      expect(response.body).to have_tag('ul.errors.select')
+      expect(response.body).to have_tag('ul.errors.radio')
+      expect(response.body).to have_tag('ul.errors.checkbox')
+      expect(response.body).to have_tag('ul.errors.remnant li.error', count: 6)
+    end
+  end
+
+    describe "POST create" do
     it 'valid params NOT render error message' do
       post :create, sample: attributes_for(:valid_sample)
       expect(response.body).not_to have_tag('ul.errors.text')

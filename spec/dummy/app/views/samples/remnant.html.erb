@@ -57,25 +57,27 @@
     -->
 </style>
 <article class="w400 floater">
-    <h1>Yorisoi</h1>
+    <h1>Yorisoi Remnant Error</h1>
     <%= form_for @sample, url: create_path, method: :post, builder: Yorisoi::Builder do |f| %>
+        <%= hidden_field :remnant, value: true %>
+        <%= yield :remnant %>
         <div class="input-box p100">
             <section class="input-set">
                 <label class="input-head">text</label>
                 <div class="input-body p100">
-                    <%= f.text_field :text, class: [:p100] %>
+                    <%= f.text_field :text, class: [:p100], no_errors: true %>
                 </div>
             </section>
             <section class="input-set">
                 <label class="input-head">password</label>
                 <div class="input-body p100">
-                    <%= f.password_field :password, class: [:p100] %>
+                    <%= f.password_field :password, class: [:p100], no_errors: true %>
                 </div>
             </section>
             <section class="input-set">
                 <label class="input-head">textarea</label>
                 <div class="input-body p100">
-                    <%= f.text_area :textarea, class: [:p100] %>
+                    <%= f.text_area :textarea, class: [:p100], no_errors: true %>
                 </div>
             </section>
             <section class="input-set">
@@ -97,6 +99,7 @@
                 </div>
             </section>
         </div>
+        <%= f.remnant %>
         <ul class="form-button-area">
             <li><%= f.submit :submit, class: [:button, :green] %></li>
         </ul>

@@ -3,13 +3,16 @@ class SamplesController < ApplicationController
     @sample = Sample.new
   end
 
+  def remnant
+    @sample = Sample.new
+  end
 
   def create
     Sample.create!(sample_params)
-    redirect_to new_path
+    redirect_to params[:remnant] ? remnant_path : new_path
   rescue ActiveRecord::RecordInvalid => e
     @sample = e.record
-    render :new
+    render params[:remnant] ? :remnant : :new
   end
 
 
