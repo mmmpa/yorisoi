@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yorisoi (0.0.1)
+    yorisoi (0.0.2)
       rails (~> 4.2.1)
 
 GEM
