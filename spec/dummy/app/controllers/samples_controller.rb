@@ -1,9 +1,4 @@
 class SamplesController < ApplicationController
-  def index
-    @samples = Sample.all
-  end
-
-
   def new
     @sample = Sample.new
   end
@@ -17,9 +12,10 @@ class SamplesController < ApplicationController
     render :new
   end
 
+
   private
   def sample_params
-    params.fetch(:sample, {}).permit(:text, :password, :textarea, :select, :radio, checkbox:[])
+    params.fetch(:sample, {}).permit(:text, :password, :textarea, :select, :radio, checkbox: [])
   end
 
 end
