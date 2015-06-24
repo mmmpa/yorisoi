@@ -15,8 +15,10 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'http://mmmpa.net/'
   spec.license       = 'MIT'
 
-  spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-
+  spec.files         = `git ls-files`.split("\n")
+  spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  spec.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  spec.require_paths = ["lib"]
   spec.add_dependency "rails", "~> 4.2.1"
 
   spec.add_development_dependency "bundler", "~> 1.10"
