@@ -6,7 +6,7 @@ class SamplesController < ApplicationController
 
   def create
     Sample.create!(sample_params)
-    redirect_to index_path
+    redirect_to new_path
   rescue ActiveRecord::RecordInvalid => e
     @sample = e.record
     render :new
