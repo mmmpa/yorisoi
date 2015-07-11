@@ -7,7 +7,7 @@ env:
 before_install:
   - gem install bundler -v 1.10.3
 install:
-  - bundle install --without production --deployment
+  - bundle install
 cache:
   directories:
     - vendor/bundle
