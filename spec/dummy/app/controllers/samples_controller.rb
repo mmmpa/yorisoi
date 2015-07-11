@@ -22,3 +22,6 @@ class SamplesController < ApplicationController
   end
 
 end
+class String
+  alias :gsub_not_safety! :gsub!
+end

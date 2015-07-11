@@ -60,7 +60,7 @@
     <h1>Yorisoi Remnant Error</h1>
     <%= form_for @sample, url: create_path, method: :post, builder: Yorisoi::Builder do |f| %>
         <%= hidden_field :remnant, value: true %>
-        <%= yield :remnant %>
+        <!-- remnant -->
         <div class="input-box p100">
             <section class="input-set">
                 <label class="input-head">text</label>
@@ -99,9 +99,10 @@
                 </div>
             </section>
         </div>
-        <%= f.remnant %>
         <ul class="form-button-area">
             <li><%= f.submit :submit, class: [:button, :green] %></li>
         </ul>
     <% end %>
 </article>
+<% self.output_buffer.gsub_not_safety!('<!-- remnant -->', 'a') %>
+a
